@@ -1,0 +1,25 @@
+select distinct(city) from patients
+where 
+city like 'A%' 
+OR  city LIKE 'E%' 
+OR city LIKE'I%' 
+OR city LIKE 'O%'
+OR city LIKE 'U%'
+order by city asc
+
+select first_name, last_name,
+rank() over(partition by (last_name)) as num_of_duplicated
+from patients
+where (rank(first_name) over(partition by first_name)) =2
+
+select (select province_name from province_names where province_name ='Ontario'), province_name
+from province_names
+order by province_name
+
+select province_name from (
+select province_name, 
+case
+   when province_name='Ontario' then 1 else 0
+end as orders
+from province_names
+order by orders desc)
